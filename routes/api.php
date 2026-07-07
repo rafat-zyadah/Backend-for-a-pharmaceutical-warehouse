@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
 use App\Http\Controllers\Api\V1\DistributionController;
 use App\Http\Controllers\Api\V1\HealthController;
+use App\Http\Controllers\Api\V1\OrderController;
 use App\Http\Controllers\Api\V1\PermissionMatrixController;
 use App\Http\Controllers\Api\V1\PharmacyController;
 use App\Http\Controllers\Api\V1\ProductController;
@@ -131,5 +132,24 @@ Route::prefix('v1')->group(function (): void {
             ->middleware('permission:distribution.view');
         Route::get('distribution/pharmacies/{pharmacy}/reps', [DistributionController::class, 'pharmacyReps'])
             ->middleware('permission:distribution.view');
+
+        Route::get('orders/dashboard', [OrderController::class, 'dashboard'])
+            ->middleware('permission:orders.manage');
+        Route::get('orders', [OrderController::class, 'index'])
+            ->middleware('role_or_permission:rep|orders.view|orders.manage|orders.submit');
+        Route::post('orders', [OrderController::class, 'store'])
+            ->middleware('permission:orders.submit');
+        Route::get('orders/{order}', [OrderController::class, 'show'])
+            ->middleware('role_or_permission:rep|orders.view|orders.manage|orders.submit');
+        Route::patch('orders/{order}', [OrderController::class, 'update'])
+            ->middleware('permission:orders.manage');
+        Route::post('orders/{order}/approve-shipment', [OrderController::class, 'approveShipment'])
+            ->middleware('permission:orders.manage');
+        Route::post('orders/{order}/reject', [OrderController::class, 'reject'])
+            ->middleware('permission:orders.manage');
+        Route::post('orders/{order}/cancel', [OrderController::class, 'cancelByInvoicer'])
+            ->middleware('permission:orders.manage');
+        Route::post('orders/{order}/cancel-by-rep', [OrderController::class, 'cancelByRep'])
+            ->middleware('permission:orders.submit');
     });
 });

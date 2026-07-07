@@ -23,6 +23,9 @@ return [
         'pharmacies.manage',
         'distribution.view',
         'distribution.manage',
+        'orders.view',
+        'orders.submit',
+        'orders.manage',
     ],
 
     'role_permissions' => [
@@ -40,6 +43,7 @@ return [
             'products.view',
             'pharmacies.view',
             'distribution.view',
+            'orders.view',
         ],
         'invoicer' => [
             'regions.view',
@@ -52,12 +56,15 @@ return [
             'pharmacies.manage',
             'distribution.view',
             'distribution.manage',
+            'orders.view',
+            'orders.manage',
         ],
         'rep' => [
             'regions.view',
             'companies.view',
             'products.view',
             'pharmacies.view',
+            'orders.submit',
         ],
     ],
 

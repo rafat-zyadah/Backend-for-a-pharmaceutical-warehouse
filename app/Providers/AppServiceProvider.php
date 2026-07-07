@@ -8,6 +8,7 @@ use App\Support\Install\SystemInstaller;
 use App\Support\MasterData\CompanyService;
 use App\Support\MasterData\PharmacyService;
 use App\Support\MasterData\ProductService;
+use App\Support\Orders\OrderService;
 use App\Support\Users\SupervisorContactService;
 use App\Support\Users\SupervisorPasswordRecoveryService;
 use App\Support\Users\UserService;
@@ -29,6 +30,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(ProductService::class);
         $this->app->singleton(PharmacyService::class);
         $this->app->singleton(DistributionService::class);
+        $this->app->singleton(OrderService::class);
     }
 
     public function boot(): void
