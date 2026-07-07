@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Carbon;
@@ -89,5 +90,31 @@ class User extends Authenticatable
     public function scopeStatus(Builder $query, UserStatus $status): Builder
     {
         return $query->where('status', $status);
+    }
+
+    /** @return HasMany<RepRegionAssignment, $this> */
+    public function regionAssignments(): HasMany
+    {
+        return $this->hasMany(RepRegionAssignment::class, 'rep_id');
+    }
+
+    /** @return HasMany<RepPharmacyAssignment, $this> */
+    public function pharmacyAssignments(): HasMany
+    {
+        return $this->hasMany(RepPharmacyAssignment::class, 'rep_id');
+    }
+
+    /** @return HasMany<RepRegionAssignment, $this> */
+    public function activeRegionAssignments(): HasMany
+    {
+        return $this->hasMany(RepRegionAssignment::class, 'rep_id')
+            ->where('status', \App\Enums\AssignmentStatus::Active);
+    }
+
+    /** @return HasMany<RepPharmacyAssignment, $this> */
+    public function activePharmacyAssignments(): HasMany
+    {
+        return $this->hasMany(RepPharmacyAssignment::class, 'rep_id')
+            ->where('status', \App\Enums\AssignmentStatus::Active);
     }
 }

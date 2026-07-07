@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Api\V1\AuthController;
 use App\Http\Controllers\Api\V1\CompanyController;
+use App\Http\Controllers\Api\V1\DistributionController;
 use App\Http\Controllers\Api\V1\HealthController;
 use App\Http\Controllers\Api\V1\PermissionMatrixController;
 use App\Http\Controllers\Api\V1\PharmacyController;
@@ -105,5 +106,30 @@ Route::prefix('v1')->group(function (): void {
             ->middleware('permission:pharmacies.manage');
         Route::delete('pharmacies/{pharmacy}', [PharmacyController::class, 'destroy'])
             ->middleware('permission:pharmacies.manage');
+
+        Route::get('distribution/dashboard', [DistributionController::class, 'dashboard'])
+            ->middleware('permission:distribution.view');
+        Route::get('distribution/reps', [DistributionController::class, 'reps'])
+            ->middleware('permission:distribution.view');
+        Route::get('distribution/reps/{user}', [DistributionController::class, 'showRep'])
+            ->middleware('permission:distribution.view');
+        Route::post('distribution/reps/{user}/regions', [DistributionController::class, 'assignRegion'])
+            ->middleware('permission:distribution.manage');
+        Route::post('distribution/reps/{user}/regions/{region}/remove', [DistributionController::class, 'removeRegion'])
+            ->middleware('permission:distribution.manage');
+        Route::post('distribution/reps/{user}/pharmacies', [DistributionController::class, 'assignPharmacies'])
+            ->middleware('permission:distribution.manage');
+        Route::post('distribution/reps/{user}/pharmacies/{pharmacy}/remove', [DistributionController::class, 'removePharmacy'])
+            ->middleware('permission:distribution.manage');
+        Route::post('distribution/reps/{user}/pharmacies/{pharmacy}/set-primary', [DistributionController::class, 'setPrimary'])
+            ->middleware('permission:distribution.manage');
+        Route::post('distribution/regions/transfer', [DistributionController::class, 'transferRegion'])
+            ->middleware('permission:distribution.manage');
+        Route::get('distribution/pharmacies/unassigned', [DistributionController::class, 'unassignedPharmacies'])
+            ->middleware('permission:distribution.view');
+        Route::get('distribution/pharmacies/shared', [DistributionController::class, 'sharedPharmacies'])
+            ->middleware('permission:distribution.view');
+        Route::get('distribution/pharmacies/{pharmacy}/reps', [DistributionController::class, 'pharmacyReps'])
+            ->middleware('permission:distribution.view');
     });
 });

@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Support\Distribution\DistributionService;
 use App\Support\Geography\RegionService;
 use App\Support\Install\SystemInstaller;
 use App\Support\MasterData\CompanyService;
@@ -27,6 +28,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(CompanyService::class);
         $this->app->singleton(ProductService::class);
         $this->app->singleton(PharmacyService::class);
+        $this->app->singleton(DistributionService::class);
     }
 
     public function boot(): void
