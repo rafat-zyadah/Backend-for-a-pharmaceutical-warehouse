@@ -2,7 +2,11 @@
 
 namespace App\Providers;
 
+use App\Support\Geography\RegionService;
 use App\Support\Install\SystemInstaller;
+use App\Support\MasterData\CompanyService;
+use App\Support\MasterData\PharmacyService;
+use App\Support\MasterData\ProductService;
 use App\Support\Users\SupervisorContactService;
 use App\Support\Users\SupervisorPasswordRecoveryService;
 use App\Support\Users\UserService;
@@ -19,6 +23,10 @@ class AppServiceProvider extends ServiceProvider
         $this->app->singleton(UserService::class);
         $this->app->singleton(SupervisorContactService::class);
         $this->app->singleton(SupervisorPasswordRecoveryService::class);
+        $this->app->singleton(RegionService::class);
+        $this->app->singleton(CompanyService::class);
+        $this->app->singleton(ProductService::class);
+        $this->app->singleton(PharmacyService::class);
     }
 
     public function boot(): void

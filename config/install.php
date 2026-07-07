@@ -4,11 +4,6 @@ return [
 
     'guard' => 'web',
 
-    /*
-    |--------------------------------------------------------------------------
-    | System permissions (Spatie)
-    |--------------------------------------------------------------------------
-    */
     'permissions' => [
         'users.view',
         'users.create',
@@ -18,13 +13,16 @@ return [
         'users.reset_password',
         'system.settings.view',
         'system.settings.update',
+        'regions.view',
+        'regions.manage',
+        'companies.view',
+        'companies.manage',
+        'products.view',
+        'products.manage',
+        'pharmacies.view',
+        'pharmacies.manage',
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Role → permission mapping
-    |--------------------------------------------------------------------------
-    */
     'role_permissions' => [
         'supervisor' => [
             'users.view',
@@ -35,16 +33,29 @@ return [
             'users.reset_password',
             'system.settings.view',
             'system.settings.update',
+            'regions.view',
+            'companies.view',
+            'products.view',
+            'pharmacies.view',
         ],
-        'invoicer' => [],
-        'rep' => [],
+        'invoicer' => [
+            'regions.view',
+            'regions.manage',
+            'companies.view',
+            'companies.manage',
+            'products.view',
+            'products.manage',
+            'pharmacies.view',
+            'pharmacies.manage',
+        ],
+        'rep' => [
+            'regions.view',
+            'companies.view',
+            'products.view',
+            'pharmacies.view',
+        ],
     ],
 
-    /*
-    |--------------------------------------------------------------------------
-    | Default application settings (stored in DB after install)
-    |--------------------------------------------------------------------------
-    */
     'settings' => [
         'low_stock_threshold' => [
             'value' => (string) env('PHARMACY_LOW_STOCK_THRESHOLD', 100),

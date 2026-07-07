@@ -4,6 +4,7 @@ namespace App\Http\Resources\Api\V1;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Carbon;
 
 /** @mixin \App\Models\User */
 class UserResource extends JsonResource
@@ -34,7 +35,9 @@ class UserResource extends JsonResource
             'avatar_url' => $this->avatar_url,
             'residence' => $this->residence,
             'province' => $this->province,
-            'birth_date' => $this->birth_date?->toDateString(),
+            'birth_date' => $this->birth_date !== null
+                ? Carbon::parse($this->birth_date)->toDateString()
+                : null,
             'role' => $this->role->value,
             'status' => $this->status->value,
             'suspended_at' => $this->suspended_at?->toIso8601String(),
